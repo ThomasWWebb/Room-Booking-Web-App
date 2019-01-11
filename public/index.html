@@ -1,12 +1,59 @@
 <!DOCTYPE html>
 <html>
+    <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-    <div class="container">
-        <div class="row" id="full">
-            <button type="button" id="test" class="btn btn-primary">Primary</button>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+            function submithandler(){
+                $.get("http://127.0.0.1:8090/people",
+                    function (data){
+                        console.log(data)
+                        const htmlTest = JSON.parse(data)
+                        $('#peopleDisplay').html(htmlTest);
+                    });
+                return false;      
+            };
+            function formhandler(){
+                var person = {forename:document.getElementById('forename').value, surname:document.getElementById('surname').value, username:document.getElementById('username').value, email:document.getElementById('email').value};
+                $.post("http://127.0.0.1:8090/adduser", person,
+                    function (data){
+                        console.log(data)
+                        //const result = JSON.parse(data)
+                        $('#peopleDisplay').html(data);
+                    });
+                return false;      
+            };
+
+
+        </script>
+    <div class="container-fluid">
+        <div class="row" id="top-bar">
+            <h2 id="header">Trevelyan College Booking System</h2>
         </div>  
+        <div class="row" style="margin:1%">
+            <button type="button" id="test" class="btn btn-primary" onclick="submithandler()">Submit</button>
+        </div>
+        <div id="peopleDisplay">      
+        </div>
+        <div class ="row">
+            <div>
+                <form onsubmit="formhandler()">
+                    First name:<br>
+                    <input type="text" name="forename"  id="forename"><br>
+                    Last name:<br>
+                    <input type="text" name="surname" id="surname"><br>
+                    Username:<br>
+                    <input type="text" name="username" id= "username"><br>
+                    Email:<br>
+                    <input type="text" name="email" id="email"><br><br>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+        
     </div>
+
 </html>

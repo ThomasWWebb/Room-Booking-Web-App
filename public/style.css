@@ -1,7 +1,22 @@
-#full {
-    width: 100%;
-    text-align: center
+.btn-primary {
+    background-color:#384E80;
+    border-color: #384E80;
 }
+
+#top-bar {
+    text-align: center;
+    background-color: #384E80;
+    color: white;
+    padding-bottom: 0.5%;
+}
+
+#header{
+    margin:auto;
+    display:block;
+    padding: 0.5%;
+    font-size: 150%;
+}
+
 #test {
     margin:auto;
     display:block;

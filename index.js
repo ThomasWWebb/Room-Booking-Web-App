@@ -1,14 +1,32 @@
-const http = require('http');
+"use strict";
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.static('public'));
 
-const hostname = '127.0.0.1';
-const port = 3000;
+var people = {"doctorwhocomposer" : {"username":"doctorwhocomposer", "forename":"Delia", "surname":"Derbyshire"}}
+function createPerson(personDetails){
+  var person = new Object();
+  person.forename = personDetails.forename;
+  person.surname = personDetails.surname;
+  person.username = personDetails.username;
+  person.email = personDetails.email;
+  return person;
+}
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World\n');
+app.get('/people', function(req, resp){
+    const pack = JSON.stringify(people);
+    resp.send(pack);
+})
+
+
+app.post('/adduser', function(req, resp){
+  console.log(req.body);
+  var newPerson = req.body;
+  people[newPerson.username]=newPerson;
+  const result = JSON.stringify("new person added" + newPerson.username);
+  resp.send(result);
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+app.listen(8090);
