@@ -27,7 +27,7 @@
                 });
             return false;      
         };
-
+        
         function openOverlay() {
             document.getElementById("overlay").style.height = "100%";
         }
@@ -55,6 +55,7 @@
         
     </div>
     <div id="overlay" class="overlay">
+        <button class="closebtn" onclick="closeOverlay()">&times;</button>
             <div class="overlay-content">
                 <div class="row" id="form-row">
                     <form id="form">
@@ -74,7 +75,7 @@
                             <label>Email</label>
                             <input type="email" class="form-control" id="email">
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Sign Up</button>
                     </form>
                 </div>
             </div>

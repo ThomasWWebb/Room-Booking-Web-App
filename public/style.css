@@ -18,19 +18,6 @@
     width: 100%;
     text-align: center;
   }
-  
-  /* When you mouse over the navigation links, change their color */
-  .overlay a:hover, .overlay a:focus {
-    color: #f1f1f1;
-  }
-  
-  /* Position the close button (top right corner) */
-  .overlay .closebtn {
-    position: absolute;
-    top: 20px;
-    right: 45px;
-    font-size: 60px;
-  }
 
 .btn-primary {
     background-color:#384E80;
@@ -42,10 +29,6 @@
     background-color: rgb(92, 124, 197);
     color: white;
     padding: 0.5%;
-}
-
-#exit{
-    padding-left:98%;
 }
 
 #exit-button {
