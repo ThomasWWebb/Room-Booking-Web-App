@@ -29,51 +29,85 @@
         };
         
         function openOverlay() {
-            document.getElementById("overlay").style.height = "100%";
+            document.getElementById("overlay").style.width = "20%";
         }
 
         function closeOverlay() {
-            document.getElementById("overlay").style.height = "0%";
+            document.getElementById("overlay").style.width = "0%";
+        }
+
+        function openLogIn() {
+            document.getElementById("overlay1").style.width = "20%";
+        }
+
+        function closeLogIn() {
+            document.getElementById("overlay1").style.width = "0%";
         }
     </script>
     
     <div class="container-fluid">
-              
-        <div class="row" id="top-bar">
-            <h2 id="header">Trevelyan College Booking System</h2>
-        </div>  
-        <div class="row" id="button-bar">
-            <button type="button" id="centre" class="btn btn-primary" onclick="openOverlay()">Sign up</button>
+        <div class="row">
+            <nav class="navbar navbar-dark">
+                <h2 id ="header" class="navbar-brand" >Trevelyan College Booking System</h2>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent"> 
+                    <!-- Links -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <button id="nav-button" class="btn btn-primary" onclick="openLogIn()">Log In</button>
+                        </li>
+                        <li class="nav-item">
+                            <button id="nav-button" class="btn btn-primary" onclick="openOverlay()">Sign Up</button>
+                        </li>
+                        <li class="nav-item">
+                            <button id="nav-button" class="btn btn-primary">Book</button>
+                        </li>
+                    </ul>
+                </div> 
+            </nav>
         </div>
-        <div id="peopleDisplay">      
-        </div>
-        <div class ="row">
-            <div>
-                
-            </div>
-        </div>
-        
     </div>
+
     <div id="overlay" class="overlay">
         <button class="closebtn" onclick="closeOverlay()">&times;</button>
+        <div class="overlay-content">
+            <div class="row" id="form-row">
+                <form id="form">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" class="form-control" id="forename">
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" class="form-control" id="surname">
+                    </div>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" class="form-control" id="username">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" id="email">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div> 
+
+    <div id="overlay1" class="overlay">
+            <button class="closebtn" onclick="closeLogIn()">&times;</button>
             <div class="overlay-content">
                 <div class="row" id="form-row">
                     <form id="form">
-                        <div class="form-group">
-                            <label>First Name</label>
-                            <input type="text" class="form-control" id="forename">
-                        </div>
-                        <div class="form-group">
-                            <label>Last Name</label>
-                            <input type="text" class="form-control" id="surname">
-                        </div>
                         <div class="form-group">
                             <label>Username</label>
                             <input type="text" class="form-control" id="username">
                         </div>
                         <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control" id="email">
+                            <label>Password</label>
+                            <input type="password" class="form-control" id="password">
                         </div>
                         <button type="submit" class="btn btn-primary">Sign Up</button>
                     </form>
