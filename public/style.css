@@ -48,7 +48,7 @@
     font-size: 150%;
 }
 
-#form-row {
+#log-in-form-row, #sign-up-form-row {
     text-align: center;
 }
 
@@ -57,14 +57,7 @@
     text-align: left;
 }
 
-#top-bar {
-    text-align: center;
-    background-color: #384E80;
-    color: white;
-    padding-bottom: 0.5%;
-}
-
-#form{
+#log-in-form, #sign-up-form{
     margin:auto;
     display:block;
 
