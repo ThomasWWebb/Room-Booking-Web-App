@@ -28,20 +28,20 @@
             return false;      
         };
         
-        function openOverlay() {
-            document.getElementById("overlay").style.width = "20%";
+        function openSignUp() {
+            document.getElementById("sign-up").style.width = "100%";
         }
 
-        function closeOverlay() {
-            document.getElementById("overlay").style.width = "0%";
+        function closeSignUp() {
+            document.getElementById("sign-up").style.width = "0%";
         }
 
         function openLogIn() {
-            document.getElementById("overlay1").style.width = "20%";
+            document.getElementById("log-in").style.width = "100%";
         }
 
         function closeLogIn() {
-            document.getElementById("overlay1").style.width = "0%";
+            document.getElementById("log-in").style.width = "0%";
         }
     </script>
     
@@ -58,7 +58,7 @@
                             <button id="nav-button" class="btn btn-primary" onclick="openLogIn()">Log In</button>
                         </li>
                         <li class="nav-item">
-                            <button id="nav-button" class="btn btn-primary" onclick="openOverlay()">Sign Up</button>
+                            <button id="nav-button" class="btn btn-primary" onclick="openSignUp()">Sign Up</button>
                         </li>
                         <li class="nav-item">
                             <button id="nav-button" class="btn btn-primary">Book</button>
@@ -69,8 +69,8 @@
         </div>
     </div>
 
-    <div id="overlay" class="overlay">
-        <button class="closebtn" onclick="closeOverlay()">&times;</button>
+    <div id="sign-up" class="overlay">
+        <button class="closebtn" onclick="closeSignUp()">&times;</button>
         <div class="overlay-content">
             <div class="row" id="form-row">
                 <form id="form">
@@ -96,7 +96,7 @@
         </div>
     </div> 
 
-    <div id="overlay1" class="overlay">
+    <div id="log-in" class="overlay">
             <button class="closebtn" onclick="closeLogIn()">&times;</button>
             <div class="overlay-content">
                 <div class="row" id="form-row">

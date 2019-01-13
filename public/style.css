@@ -1,3 +1,19 @@
+.btn-primary {
+    background-color:#384E80;
+    border-color: #384E80;
+}
+
+.navbar{
+    background-color: #384E80;
+    color: white;
+    padding-bottom: 0.5%;
+    width:100%;
+}
+
+.nav-item{
+    width:100%;
+}
+
 .overlay {    
     height: 100%;
     width: 0%;
@@ -11,18 +27,6 @@
     transition: 0.5s;
   }
 
-.navbar{
-    background-color: #384E80;
-    color: white;
-    padding-bottom: 0.5%;
-    width:100%;
-}
-
-.nav-item{
-    width:100%;
-}
-  
-  
 .overlay-content {
     position: relative;
     top: 20%; 
@@ -30,21 +34,13 @@
     text-align: center;
 }
 
-.btn-primary {
-    background-color:#384E80;
-    border-color: #384E80;
-}
+
 
 #button-bar {
     text-align: center;
     background-color: rgb(92, 124, 197);
     color: white;
     padding: 0.5%;
-}
-
-#exit-button {
-    background-color: rgb(0, 0,0,0);
-    border-color: rgb(0, 0,0,0);
 }
 
 #header{
