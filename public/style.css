@@ -34,18 +34,24 @@
     text-align: center;
 }
 
-
-
-#button-bar {
-    text-align: center;
-    background-color: rgb(92, 124, 197);
-    color: white;
-    padding: 0.5%;
+#centre {
+    margin-left:1%;
+    display:block;
 }
 
 #header{
     display:inline;
     font-size: 150%;
+}
+
+#log-in-close-btn, #sign-up-close-btn{
+    color: white;
+    margin:1%;
+}
+
+#log-in-form, #sign-up-form-first, #sign-up-form-second {
+    margin:auto;
+    display:block;
 }
 
 #log-in-form-row, #sign-up-form-row {
@@ -57,13 +63,9 @@
     text-align: left;
 }
 
-#log-in-form, #sign-up-form{
-    margin:auto;
-    display:block;
-
+#sign-up-form-second {
+    display:none;
 }
 
-#centre {
-    margin-left:1%;
-    display:block;
-}
+
+
