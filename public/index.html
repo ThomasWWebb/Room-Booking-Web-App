@@ -27,6 +27,8 @@
         };
 
         function postNewPerson(newPerson){
+            newPerson.access_token = "concertina"
+            console.log(newPerson);
             $.post("http://127.0.0.1:8090/adduser", newPerson,
                 function (data){
                  console.log(data);
