@@ -11,18 +11,42 @@ app.get('/people', function(req, resp){
     resp.send(people);
 })
 
-app.get('/logIn', function(req, resp){
-  console.log(req.body);
+app.get('/people/:username', function(req, resp){
+  resp.send(people[req.params.username]);
 })
 
-app.post('/adduser', function(req, resp){
-  console.log(req.body);
+app.post('/people', function(req, resp){
   var newPerson = req.body;
   var result = JSON.stringify("new person hasn't been added");
-  if(newPerson.access_token == "concertina"){
-    delete newPerson.access_token;
-    people[newPerson.username]=newPerson;
-    result = JSON.stringify("new person added" + newPerson.username);
+  resp.statusCode = 403;
+  if(newPerson.access_token == 'concertina'){
+    if(!(newPerson.username in people)){
+      delete newPerson.access_token;
+      people[newPerson.username]=newPerson;
+      result = JSON.stringify("new person added" + newPerson.username);
+      resp.statusCode = 200;
+    } else {
+      resp.statusCode = 400;
+    }
+  } else if (req.headers.access_token == 'concertina') {
+    newPerson = {"username":req.headers.username, "forename":req.headers.forename, "surename":req.headers.surname, "password":req.headers.password, "email": req.headers.email}
+    if(!(newPerson.username in people)){
+      people[req.headers.username]=newPerson;
+      result = JSON.stringify("new person added" + newPerson.username);
+      resp.statusCode = 200;
+    } else {
+      resp.statusCode = 400;
+    }
+  }
+  resp.send(result);
+});
+
+app.post('/logOn', function(req, resp){
+  if (req.body.username in people){
+    if (people[req.body.username].password == req.body.password) {
+      
+    }
+
   }
   resp.send(result);
 });

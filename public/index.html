@@ -18,6 +18,14 @@
             return false;      
         };
 
+        function getPerson(username){ 
+            $.get("http://127.0.0.1:8090/people/:username",
+                function (data){
+                    console.log(data);
+                }, "json");
+            return false;      
+        };
+
          function logIn(details){ 
             $.get("http://127.0.0.1:8090/logIn", details,
                 function (data){
@@ -29,7 +37,15 @@
         function postNewPerson(newPerson){
             newPerson.access_token = "concertina"
             console.log(newPerson);
-            $.post("http://127.0.0.1:8090/adduser", newPerson,
+            $.post("http://127.0.0.1:8090/people", newPerson,
+                function (data){
+                 console.log(data);
+             }); 
+        };
+
+        function logOn(details){
+            console.log(details);
+            $.post("http://127.0.0.1:8090/logOn", details,
                 function (data){
                  console.log(data);
              }); 
@@ -39,11 +55,10 @@
             $(document).on('submit', '#sign-up-form-first', function() {
                 person.username = document.getElementById('sign-up-username').value;
                 person.password = document.getElementById('sign-up-password').value;
-                person.retypePassword = document.getElementById('sign-up-retype-password').value;
                 console.log(person);
                 $("#sign-up-form-first").fadeOut("slow",  function () {
                     $("#sign-up-form-second").fadeIn("slow");
-                });
+                });     
              return false;
             });
             
@@ -125,30 +140,26 @@
                 <form id="sign-up-form-first">
                     <div class="form-group">
                         <label>Username</label>
-                        <input type="text" class="form-control" id="sign-up-username">
+                        <input type="text" class="form-control" id="sign-up-username" required>
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" class="form-control" id="sign-up-password">
-                    </div>
-                    <div class="form-group">
-                        <label>Retype password</label>
-                        <input type="password" class="form-control" id="sign-up-retype-password">
+                        <input type="password" class="form-control" id="sign-up-password" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Next</button>
                 </form>
                 <form id="sign-up-form-second">
                     <div class="form-group">
                             <label>Email</label>
-                            <input type="email" class="form-control" id="sign-up-email">
+                            <input type="email" class="form-control" id="sign-up-email" required>
                         </div>
                     <div class="form-group">
                         <label>First Name</label>
-                        <input type="text" class="form-control" id="sign-up-forename">
+                        <input type="text" class="form-control" id="sign-up-forename" required>
                     </div>
                     <div class="form-group">
                         <label>Last Name</label>
-                        <input type="text" class="form-control" id="sign-up-surname">
+                        <input type="text" class="form-control" id="sign-up-surname" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Sign Up</button>
                 </form>
