@@ -1,7 +1,20 @@
+
 .btn-primary {
     background-color:#384E80;
     border-color: #384E80;
 }
+
+.fc-scroller {
+    overflow-y: auto;
+ }
+
+.fc-view {
+    margin-top:1%;
+    position: absolute;
+    bottom:0;
+    overflow-y: auto;
+    overflow-y: hidden;
+    }
 
 .navbar{
     background-color: #384E80;
@@ -34,6 +47,13 @@
     text-align: center;
 }
 
+#calendar {
+    background-color: white;
+    margin:4%;
+    height:10%;
+    width:90%;
+}
+
 #centre {
     margin-left:1%;
     display:block;
@@ -44,7 +64,7 @@
     font-size: 150%;
 }
 
-#log-in-close-btn, #sign-up-close-btn{
+#log-in-close-btn, #sign-up-close-btn, #rooms-close-btn{
     color: white;
     margin:1%;
 }
@@ -66,6 +86,9 @@
 #sign-up-form-second {
     display:none;
 }
+
+
+
 
 
 

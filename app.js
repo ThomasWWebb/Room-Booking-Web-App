@@ -2,9 +2,12 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var randomstring = require("randomstring");
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static('public'));
 
+
+var logInTokens = {}
 var people = {"doctorwhocomposer" : {"username":"doctorwhocomposer", "forename":"Delia", "surname":"Derbyshire", "password":"password", "email": "doctor@who.com"}}
 
 app.get('/people', function(req, resp){
@@ -42,11 +45,17 @@ app.post('/people', function(req, resp){
 });
 
 app.post('/logOn', function(req, resp){
+  var result = {"message":"", "token":""}
   if (req.body.username in people){
     if (people[req.body.username].password == req.body.password) {
-      
+      result.message = "success";
+      result.token = randomstring.generate(12);
+      logInTokens[req.body.username] = result.token
+    } else {
+      result.message = "incorrect password";
     }
-
+  } else {
+    result.message = "incorrect username"
   }
   resp.send(result);
 });

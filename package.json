@@ -11,7 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
+    "fullcalendar": "^3.10.0",
+    "fullcalendar-scheduler": "^1.9.4",
     "jest": "^23.6.0",
+    "moment": "^2.23.0",
+    "randomstring": "^1.1.5",
     "supertest": "^3.3.0"
   }
 }

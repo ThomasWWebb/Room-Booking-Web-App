@@ -1,191 +1,243 @@
 <!DOCTYPE html>
 <html>
-    <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="style.css">
-
-    <script>
-        var person = new Object();
-
-        function getPeople(){ 
-            $.get("http://127.0.0.1:8090/people",
-                function (data){
-                    console.log(data);
-                }, "json");
-            return false;      
-        };
-
-        function getPerson(username){ 
-            $.get("http://127.0.0.1:8090/people/:username",
-                function (data){
-                    console.log(data);
-                }, "json");
-            return false;      
-        };
-
-         function logIn(details){ 
-            $.get("http://127.0.0.1:8090/logIn", details,
-                function (data){
-                    console.log(data);
-                }, "json");
-            return false;      
-        };
-
-        function postNewPerson(newPerson){
-            newPerson.access_token = "concertina"
-            console.log(newPerson);
-            $.post("http://127.0.0.1:8090/people", newPerson,
-                function (data){
-                 console.log(data);
-             }); 
-        };
-
-        function logOn(details){
-            console.log(details);
-            $.post("http://127.0.0.1:8090/logOn", details,
-                function (data){
-                 console.log(data);
-             }); 
-        };
-
-        $(document).ready(function() {
-            $(document).on('submit', '#sign-up-form-first', function() {
-                person.username = document.getElementById('sign-up-username').value;
-                person.password = document.getElementById('sign-up-password').value;
-                console.log(person);
-                $("#sign-up-form-first").fadeOut("slow",  function () {
-                    $("#sign-up-form-second").fadeIn("slow");
-                });     
-             return false;
-            });
-            
-            $(document).on('submit', '#sign-up-form-second', function() {
-                person.email= document.getElementById('sign-up-email').value;
-                person.forename = document.getElementById('sign-up-forename').value;
-                person.surname = document.getElementById('sign-up-surname').value;
-                console.log(person);
-                $("#sign-up-form-second").fadeOut("slow",  function () {
-                   closeSignUp();
-                });
-                postNewPerson(person);
-             return false;
-            });
-        });
-
-        $(document).ready(function() {
-            $(document).on('submit', '#sign-up-form-first', function() {
-                var person = {forename:document.getElementById('sign-up-forename').value, surname:document.getElementById('sign-up-surname').value, username:document.getElementById('sign-up-username').value, email:document.getElementById('sign-up-email').value};
-                $("#sign-up-form-first").fadeOut("slow",  function () {
-                    $("#sign-up-form-second").fadeIn("slow");
-                });
-             return false;
-            });
-        });
+    <head>
+        <link rel="icon" type="image/png" href="/favicon.png">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
+        <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>
+        <script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
+        <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="fullcalendar.css"/>
+    </head>
+    <body>
+        <script>
+                var person = new Object();
         
-        function openSignUp() {
-            document.getElementById("sign-up-form-second").style.display = "none";
-            document.getElementById("sign-up-form-first").style.display = "block";
-            document.getElementById("sign-up").style.width = "100%";
-        }
+                function getPeople(){ 
+                    $.get("http://127.0.0.1:8090/people",
+                        function (data){
+                            console.log(data);
+                        }, "json");
+                    return false;      
+                };
+        
+                function getPerson(username){ 
+                    $.get("http://127.0.0.1:8090/people/:username",
+                        function (data){
+                            console.log(data);
+                        }, "json");
+                    return false;      
+                };
+        
+                    function logIn(details){ 
+                    $.get("http://127.0.0.1:8090/logIn", details,
+                        function (data){
+                            console.log(data);
+                        }, "json");
+                    return false;      
+                };
+        
+                function postNewPerson(newPerson){
+                    newPerson.access_token = "concertina"
+                    console.log(newPerson);
+                    $.post("http://127.0.0.1:8090/people", newPerson,
+                        function (data){
+                            console.log(data);
+                        }); 
+                };
+        
+                function logOn(details){
+                    console.log(details);
+                    $.post("http://127.0.0.1:8090/logOn", details,
+                        function (data){
+                            console.log(data);
+                        }); 
+                };
+        
+                $(document).ready(function() {
+                    $('#calendar').fullCalendar({
+                        columnFormat: 'ddd D/M',
+                        defaultView: 'agendaWeek',
+                        themeSystem: 'bootstrap3',
+                        height: 380,
+                        header: {
+                            left: 'title',
+                            right: 'prev,next today'
+                        },
+                        allDaySlot: false,
+                        businessHours:
+                            {
+                                    start: '08:00',
+                                    end:   '22:30',
+                                    dow: [ 0, 1, 2, 3, 4, 5, 6]
+                            },
+                    events: [
+                    // events go here
+                    ],
+                    resources: [
+                        { id: 'a', title: 'Room A' }]
+                    })
 
-        function closeSignUp() {
-            document.getElementById("sign-up").style.width = "0%";
-        }
+                    $(document).on('submit', '#sign-up-form-first', function() {
+                        person.username = document.getElementById('sign-up-username').value;
+                        person.password = document.getElementById('sign-up-password').value;
+                        console.log(person);
+                        $("#sign-up-form-first").fadeOut("slow",  function () {
+                            $("#sign-up-form-second").fadeIn("slow");
+                        });     
+                        return false;
+                    });
+                    
+                    $(document).on('submit', '#sign-up-form-second', function() {
+                        person.email= document.getElementById('sign-up-email').value;
+                        person.forename = document.getElementById('sign-up-forename').value;
+                        person.surname = document.getElementById('sign-up-surname').value;
+                        console.log(person);
+                        $("#sign-up-form-second").fadeOut("slow",  function () {
+                            closeSignUp();
+                        });
+                        postNewPerson(person);
+                        return false;
+                    });
+                });
+        
+                $(document).ready(function() {
+                    $(document).on('submit', '#sign-up-form-first', function() {
+                        var person = {forename:document.getElementById('sign-up-forename').value, surname:document.getElementById('sign-up-surname').value, username:document.getElementById('sign-up-username').value, email:document.getElementById('sign-up-email').value};
+                        $("#sign-up-form-first").fadeOut("slow",  function () {
+                            $("#sign-up-form-second").fadeIn("slow");
+                        });
+                        return false;
+                    });
+                });
 
-        function openLogIn() {
-            document.getElementById("log-in").style.width = "100%";
-        }
+                function openSignUp() {
+                    document.getElementById("sign-up-form-second").style.display = "none";
+                    document.getElementById("sign-up-form-first").style.display = "block";
+                    document.getElementById("sign-up").style.width = "100%";
+                }
+        
+                function closeSignUp() {
+                    document.getElementById("sign-up").style.width = "0%";
+                }
+        
+                function openLogIn() {
+                    document.getElementById("log-in").style.width = "100%";
+                }
+        
+                function closeLogIn() {
+                    document.getElementById("log-in").style.width = "0%";
+                }
 
-        function closeLogIn() {
-            document.getElementById("log-in").style.width = "0%";
-        }
+                function openRooms() {
+                    document.getElementById("rooms").style.width = "100%";
+                }
+        
+                function closeRooms() {
+                    document.getElementById("rooms").style.width = "0%";
+                }
+        
+            </script>
+            
+           <div id="total-container" class="container-fluid">
+                <div class="row">
+                    <nav class="navbar navbar-dark">
+                        <h2 id ="header" class="navbar-brand" >Trevelyan College Booking System</h2>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content"
+                        aria-controls="nav-content" aria-expanded="false"><span class="navbar-toggler-icon"></span></button>
+                        <div class="collapse navbar-collapse" id="nav-content"> 
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <button id="nav-button" class="btn btn-primary" onclick="openLogIn()">Log In</button>
+                                </li>
+                                <li class="nav-item">
+                                    <button id="nav-button" class="btn btn-primary" onclick="openSignUp()">Sign Up</button>
+                                </li>
+                                <li class="nav-item">
+                                    <button id="nav-button" class="btn btn-primary" onclick="openRooms()">Rooms</button>
+                                </li>
+                                <li class="nav-item">
+                                    <button id="nav-button" class="btn btn-primary" onclick="getPeople()">People</button>
+                                </li>
+                            </ul>
+                        </div> 
+                    </nav>
+                </div>
+                <div class="row">
+                        <div id='calendar'></div>
+                    </div>
+            </div>
+        
+            <div id="sign-up" class="overlay">
+                <button type="button" id="sign-up-close-btn" class="close" aria-label="Close"  onclick="closeSignUp()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="overlay-content">
+                    <div class="row" id="sign-up-form-row">
+                        <form id="sign-up-form-first">
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" class="form-control" id="sign-up-username" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" class="form-control" id="sign-up-password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Next</button>
+                        </form>
+                        <form id="sign-up-form-second">
+                            <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" class="form-control" id="sign-up-email" required>
+                                </div>
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" class="form-control" id="sign-up-forename" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" class="form-control" id="sign-up-surname" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Sign Up</button>
+                        </form>
+                    </div>
+                </div>
+            </div> 
+        
+            <div id="log-in" class="overlay">
+                <button type="button" id="log-in-close-btn" class="close" aria-label="Close"  onclick="closeLogIn()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="overlay-content">
+                    <div class="row" id="log-in-form-row">
+                        <form id="log-in-form">
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" class="form-control" id="username">
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" class="form-control" id="password">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Log In</button>
+                        </form>
+                    </div>
+                </div>
+            </div> 
 
-    </script>
+            <div id="rooms" class="overlay">
+                    <button type="button" id="rooms-close-btn" class="close" aria-label="Close"  onclick="closeRooms()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="overlay-content">
+                    </div>
+                </div>
+    </body>
+
     
-    <div class="container-fluid">
-        <div class="row">
-            <nav class="navbar navbar-dark">
-                <h2 id ="header" class="navbar-brand" >Trevelyan College Booking System</h2>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content"
-                aria-controls="nav-content" aria-expanded="false"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="nav-content"> 
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <button id="nav-button" class="btn btn-primary" onclick="openLogIn()">Log In</button>
-                        </li>
-                        <li class="nav-item">
-                            <button id="nav-button" class="btn btn-primary" onclick="openSignUp()">Sign Up</button>
-                        </li>
-                        <li class="nav-item">
-                            <button id="nav-button" class="btn btn-primary">Book</button>
-                        </li>
-                        <li class="nav-item">
-                            <button id="nav-button" class="btn btn-primary" onclick="getPeople()">People</button>
-                        </li>
-                    </ul>
-                </div> 
-            </nav>
-        </div>
-    </div>
-
-    <div id="sign-up" class="overlay">
-        <button type="button" id="sign-up-close-btn" class="close" aria-label="Close"  onclick="closeSignUp()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <div class="overlay-content">
-            <div class="row" id="sign-up-form-row">
-                <form id="sign-up-form-first">
-                    <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" class="form-control" id="sign-up-username" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" class="form-control" id="sign-up-password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Next</button>
-                </form>
-                <form id="sign-up-form-second">
-                    <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control" id="sign-up-email" required>
-                        </div>
-                    <div class="form-group">
-                        <label>First Name</label>
-                        <input type="text" class="form-control" id="sign-up-forename" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Last Name</label>
-                        <input type="text" class="form-control" id="sign-up-surname" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Sign Up</button>
-                </form>
-            </div>
-        </div>
-    </div> 
-
-    <div id="log-in" class="overlay">
-        <button type="button" id="log-in-close-btn" class="close" aria-label="Close"  onclick="closeLogIn()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <div class="overlay-content">
-            <div class="row" id="log-in-form-row">
-                <form id="log-in-form">
-                    <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" class="form-control" id="username">
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" class="form-control" id="password">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Log In</button>
-                </form>
-            </div>
-        </div>
-    </div> 
 
 </html>
