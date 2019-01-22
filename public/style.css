@@ -1,3 +1,7 @@
+img {
+    margin:auto;
+    display:block;
+}
 
 .btn-primary {
     background-color:#384E80;
@@ -71,6 +75,18 @@
     margin-bottom:1%;
 }
 
+.carousel-inner{
+    height: 480px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.carousel slide container {
+    text-align: center;
+    height: 480px;
+}
+
 #centre {
     margin-left:1%;
     display:block;
@@ -85,7 +101,7 @@
     font-size: 150%;
 }
 
-#log-in-close-btn, #sign-up-close-btn, #rooms-close-btn{
+#log-in-close-btn, #rooms-close-btn, #sign-up-close-btn{
     color: white;
     margin:1%;
 }
@@ -99,8 +115,9 @@
     text-align: center;
 }
 
-#rooms-carousel {
-    margin-top:3%;
+#nav-button{
+    width:100%;
+    text-align: left;
 }
 
 #rooms-btns {
@@ -110,9 +127,12 @@
     margin-right:30%;
 }
 
-#nav-button{
-    width:100%;
-    text-align: left;
+#rooms-carousel {
+    margin-top:3%;
+}
+
+#rooms-overlay {
+    top:1%;
 }
 
 #sign-up-form-second {
@@ -120,26 +140,6 @@
 }
 
 
-  img {
-    margin:auto;
-    display:block;
-  }
-
-.carousel slide container {
-    text-align: center;
-    height: 480px;
-}
-
-.carousel-inner{
-    height: 480px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-}
-
-#rooms-overlay {
-    top:1%;
-}
 
 
 
