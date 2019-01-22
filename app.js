@@ -10,6 +10,29 @@ app.use(express.static('public'));
 var logInTokens = {}
 var people = {"doctorwhocomposer" : {"username":"doctorwhocomposer", "forename":"Delia", "surname":"Derbyshire", "password":"password", "email": "doctor@who.com"}}
 
+var dowrickEvents = [{
+  title: 'Event Title1',
+  start: '2019-01-21T13:13:55.008',
+  end: '2019-01-21T14:14:55.008'
+  },
+  {
+  title: 'Event Title2',
+  start: '2019-01-21T15:13:55',
+  end: '2019-01-21T16:13:55'
+  }];
+
+var mashEvents = [{
+  title: 'Band',
+  start: '2019-01-21T13:13:55.008',
+  end: '2019-01-21T14:14:55.008'
+}];
+var events = {dowrick : dowrickEvents, mash : mashEvents}
+app.get('/events/:room', function(req, resp){
+  console.log("got something")
+    resp.send(events[req.params.room]);
+    console.log(events[req.params.room])
+}) 
+
 app.get('/people', function(req, resp){
     resp.send(people);
 })

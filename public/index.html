@@ -4,12 +4,13 @@
         <link rel="icon" type="image/png" href="/favicon.png">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
         <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>
         <script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
         <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="fullcalendar.css"/>
     </head>
@@ -60,14 +61,25 @@
         
                 $(document).ready(function() {
                     $('#calendar').fullCalendar({
+                        themeSystem: 'bootstrap4',
                         columnFormat: 'ddd D/M',
                         defaultView: 'agendaWeek',
-                        themeSystem: 'bootstrap3',
-                        height: 380,
+                        height: 440,
+                        contentHeight:420,
                         header: {
                             left: 'title',
-                            right: 'prev,next today'
+                            center: 'myCustomButton',
+                            right: 'prev,next today '
                         },
+                        customButtons: {
+                            myCustomButton: {
+                                text: 'custom!', 
+                                click: function() {
+                                    alert('clicked the custom button!');
+                                }
+                            }
+                        },
+                        titleFormat: '[Dowrick]',
                         allDaySlot: false,
                         businessHours:
                             {
@@ -75,9 +87,9 @@
                                     end:   '22:30',
                                     dow: [ 0, 1, 2, 3, 4, 5, 6]
                             },
-                    events: [
-                    // events go here
-                    ],
+                        events: {
+                            url: "http://127.0.0.1:8090/events/dowrick",
+                        },
                     resources: [
                         { id: 'a', title: 'Room A' }]
                     })
@@ -103,6 +115,36 @@
                         postNewPerson(person);
                         return false;
                     });
+
+                    function changeRooms(room) {
+                        var prevRoom = $('#book-btn').text();
+                        prevRoom = prevRoom.toLowerCase();
+                        room = room.toLowerCase();
+                        console.log(prevRoom)
+                        console.log(room)
+                        $('#book-btn').html(room);
+                        var removeSource = 'http://127.0.0.1:8090/events/' + prevRoom;
+                        var newSource = 'http://127.0.0.1:8090/events/' + room;
+                        $('#calendar').fullCalendar( 'removeEventSource', removeSource )
+                        $("#calendar").fullCalendar('addEventSource', newSource);
+                        closeRooms();
+                    }
+
+                    $(document).on('click', '#Dowrick-btn', function() {
+                        changeRooms("Dowrick");
+                    })
+
+                    $(document).on('click', '#Mash-btn', function() {
+                        changeRooms("Mash");
+                    })
+
+                    $(document).on('click', '#Gym-btn', function() {
+                        changeRooms("Gym");
+                    })
+
+                    $('.carousel').carousel({
+                        interval: false
+                    }); 
                 });
         
                 $(document).ready(function() {
@@ -169,6 +211,7 @@
                 </div>
                 <div class="row">
                         <div id='calendar'></div>
+                        <div><button id="book-btn" class="btn btn-primary" onclick="openLogIn()">Dowrick</button></div>
                     </div>
             </div>
         
@@ -230,12 +273,49 @@
             </div> 
 
             <div id="rooms" class="overlay">
-                    <button type="button" id="rooms-close-btn" class="close" aria-label="Close"  onclick="closeRooms()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <div class="overlay-content">
-                    </div>
+                <button type="button" id="rooms-close-btn" class="close" aria-label="Close"  onclick="closeRooms()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="overlay-content" id="rooms-overlay">
+                            <div id="rooms-carousel" class="carousel slide container">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                        <img class="d-block w-100" src="Dowrick.png" alt="Dowrick">
+                                        <div class="carousel-caption" type="button" onclick="closeRooms()">
+                                            <h5>Dowrick</h5>
+                                            <p>60-Seat Recital Room</p>
+                                        </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                        <img class="d-block w-100" src="Mash.png" alt="Mash">
+                                        <div class="carousel-caption" type="button" onclick="closeRooms()">
+                                            <h5>MASH Room</h5>
+                                            <p>Sound-proof practice space and recording studio</p>
+                                        </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                        <img class="d-block w-100" src="Gym.png" alt="Gym">
+                                        <div class="carousel-caption" type="button" onclick="closeRooms()">
+                                            <h5>Gym</h5>
+                                            <p>A Gym</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a class="carousel-control-prev" href="#rooms-carousel" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#rooms-carousel" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                                <button id="Dowrick-btn" class="btn btn-primary">Dowrick</button>
+                                <button id="Mash-btn" class="btn btn-primary">MASH</button>
+                                <button id="Gym-btn" class="btn btn-primary">Gym</button>
                 </div>
+                
+            </div>
     </body>
 
     
