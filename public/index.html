@@ -89,9 +89,7 @@
                             },
                         events: {
                             url: "http://127.0.0.1:8090/events/dowrick",
-                        },
-                    resources: [
-                        { id: 'a', title: 'Room A' }]
+                        }
                     })
 
                     $(document).on('submit', '#sign-up-form-first', function() {
@@ -145,6 +143,18 @@
                     $('.carousel').carousel({
                         interval: false
                     }); 
+
+                    $(document).on('mouseenter', '#Dowrick-btn', function() {
+                        $('#rooms-carousel').carousel(0);
+                    });
+
+                    $(document).on('mouseenter', '#Mash-btn', function() {
+                        $('#rooms-carousel').carousel(1);
+                    });
+
+                    $(document).on('mouseenter', '#Gym-btn', function() {
+                        $('#rooms-carousel').carousel(2);
+                    });
                 });
         
                 $(document).ready(function() {
@@ -301,14 +311,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <a class="carousel-control-prev" href="#rooms-carousel" role="button" data-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#rooms-carousel" role="button" data-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
                                 </div>
                                 <button id="Dowrick-btn" class="btn btn-primary">Dowrick</button>
                                 <button id="Mash-btn" class="btn btn-primary">MASH</button>

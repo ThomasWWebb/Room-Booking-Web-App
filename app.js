@@ -28,9 +28,7 @@ var mashEvents = [{
 }];
 var events = {dowrick : dowrickEvents, mash : mashEvents}
 app.get('/events/:room', function(req, resp){
-  console.log("got something")
     resp.send(events[req.params.room]);
-    console.log(events[req.params.room])
 }) 
 
 app.get('/people', function(req, resp){

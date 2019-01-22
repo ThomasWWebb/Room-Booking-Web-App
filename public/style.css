@@ -94,6 +94,7 @@ img {
 
 #Dowrick-btn, #Mash-btn, #Gym-btn {
     display:inline-block;
+    width: 15%;
 }
 
 #header{
