@@ -70,7 +70,6 @@
         
                 $(document).ready(function() {
                     $('#calendar').fullCalendar({
-                        themeSystem: 'bootstrap4',
                         columnFormat: 'ddd D/M',
                         defaultView: 'agendaWeek',
                         height: 440,
@@ -98,7 +97,10 @@
                             },
                         events: {
                             url: "http://127.0.0.1:8090/events/dowrick",
-                        }
+                        },
+                        eventBackgroundColor: "rgb(7, 33, 95)",
+                        eventTextColor: "white",
+                        eventBorderColor:"rgb(7, 33, 95)"
                     })
 
                     $(document).on('submit', '#sign-up-form-first', function() {

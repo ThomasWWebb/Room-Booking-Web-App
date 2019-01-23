@@ -26,6 +26,10 @@ img {
     overflow-y: auto;
  }
 
+.fc-title, .fc-time {
+    text-align: center;
+}
+
 .fc-view {
     margin-top:1%;
     position: absolute;
