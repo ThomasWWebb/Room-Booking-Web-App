@@ -26,10 +26,19 @@ var mashEvents = [{
   start: '2019-01-21T13:13:55.008',
   end: '2019-01-21T14:14:55.008'
 }];
-var events = {dowrick : dowrickEvents, mash : mashEvents}
+var events = {"dowrick" : dowrickEvents, "mash" : mashEvents}
+
 app.get('/events/:room', function(req, resp){
     resp.send(events[req.params.room]);
 }) 
+
+app.post('/event', function(req,resp){
+  var room = req.body.room; 
+  var event = req.body;
+  delete event.room;
+  events[room].push(event);
+  resp.send(events[room]);
+});
 
 app.get('/people', function(req, resp){
     resp.send(people);

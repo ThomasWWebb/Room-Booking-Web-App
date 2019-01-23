@@ -53,7 +53,7 @@ img {
     left: 0;
     top: 0;
     color: white;
-    background-color: rgba(0,0,0, 0.9);
+    background-color: rgba(0,0,0, 0.8);
     overflow-x: hidden; 
     transition: 0.5s;
   }
@@ -107,18 +107,23 @@ img {
     margin:1%;
 }
 
-#log-in-form, #sign-up-form-first, #sign-up-form-second {
+#log-in-form, #new-booking-form, #sign-up-form-first, #sign-up-form-second {
     margin:auto;
     display:block;
 }
 
-#log-in-form-row, #sign-up-form-row {
+#log-in-form-row, #new-booking-form-row, #sign-up-form-row {
     text-align: center;
+    margin:0;
 }
 
 #nav-button{
     width:100%;
     text-align: left;
+}
+
+#new-booking-overlay {
+    top:10%;
 }
 
 #rooms-btns {
