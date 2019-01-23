@@ -18,6 +18,9 @@
         <script>
                 var person = new Object();
                 var event = new Object();
+
+                var newButton = document.createElement("button");
+
         
                 function getPeople(){ 
                     $.get("http://127.0.0.1:8090/people",
@@ -102,6 +105,8 @@
                         eventTextColor: "white",
                         eventBorderColor:"rgb(7, 33, 95)"
                     })
+                    newButton = $('#book-btn')
+                    $('.fc-right').append(newButton);
 
                     $(document).on('submit', '#sign-up-form-first', function() {
                         person.username = document.getElementById('sign-up-username').value;
