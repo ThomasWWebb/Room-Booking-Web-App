@@ -223,10 +223,12 @@
 
                  function openNewBooking() {
                     document.getElementById("new-booking").style.width = "100%";
+                    document.getElementById("book-btn").disabled = true;
                 }
         
                 function closeNewBooking() {
                     document.getElementById("new-booking").style.width = "0%";
+                    document.getElementById("book-btn").disabled = false;
                 }
 
 
