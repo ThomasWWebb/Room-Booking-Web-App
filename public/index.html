@@ -126,12 +126,12 @@
                     });
 
                     function changeRooms(room) {
-                        var prevRoom = $('#room-name-btn').text();
+                        var prevRoom = $('.fc-left h2').text();
+                        $(".fc-left h2").html(room);
                         prevRoom = prevRoom.toLowerCase();
                         room = room.toLowerCase();
                         console.log(prevRoom)
                         console.log(room)
-                        $('#room-name-btn').html(room);
                         var removeSource = 'http://127.0.0.1:8090/events/' + prevRoom;
                         var newSource = 'http://127.0.0.1:8090/events/' + room;
                         $('#calendar').fullCalendar( 'removeEventSource', removeSource )
@@ -171,7 +171,7 @@
                         event.title = document.getElementById('display-name').value;
                         event.start = document.getElementById('date').value + "T" + document.getElementById('start-time').value;
                         event.end = document.getElementById('date').value + "T" + document.getElementById('end-time').value;
-                        event.room = $('#room-name-btn').text();
+                        event.room = $('.fc-left h2').text();
                         event.room = event.room.toLowerCase();
                         console.log(event);   
                         addEvent(event);
@@ -254,7 +254,6 @@
                 </div>
                 <div class="row">
                         <div id='calendar'></div>
-                        <div><button id="room-name-btn" class="btn btn-primary">Dowrick</button></div>
                         <div><button id="book-btn" class="btn btn-primary" onclick="openNewBooking()">New Booking</button></div>
                     </div>
             </div>
@@ -346,9 +345,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button id="Dowrick-btn" class="btn btn-primary">Dowrick</button>
-                                <button id="Mash-btn" class="btn btn-primary">MASH</button>
-                                <button id="Gym-btn" class="btn btn-primary">Gym</button>
+                                <button id="Dowrick-btn" class="btn btn-primary" data-toggle="collapse" data-target="#nav-content">Dowrick</button>
+                                <button id="Mash-btn" class="btn btn-primary" data-toggle="collapse" data-target="#nav-content">MASH</button>
+                                <button id="Gym-btn" class="btn btn-primary" data-toggle="collapse" data-target="#nav-content">Gym</button>
                 </div>
             </div>
 
