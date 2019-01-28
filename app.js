@@ -5,10 +5,14 @@ var bodyParser = require('body-parser');
 var randomstring = require("randomstring");
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static('public'));
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const jwt = require('jwt-simple');
+const BearerStrategy = require('passport-http-bearer').Strategy;
+const SECRET = 'mysecret';
 
-
-var logInTokens = {}
-var people = {"doctorwhocomposer" : {"username":"doctorwhocomposer", "forename":"Delia", "surname":"Derbyshire", "password":"password", "email": "doctor@who.com"}}
+var loginDetails = {"admin" : "password", "doctorwhocomposer" : "12345678"};
+var people = {"doctorwhocomposer" : {"username":"doctorwhocomposer", "forename":"Delia", "surname":"Derbyshire", "password":"12345678", "email": "doctor@who.com"}}
 
 var dowrickEvents = [{
   title: 'Event Title1',
@@ -31,6 +35,40 @@ var events = {"dowrick" : dowrickEvents, "mash" : mashEvents}
 app.get('/events/:room', function(req, resp){
     resp.send(events[req.params.room]);
 }) 
+
+passport.use(new LocalStrategy((username, password, done) => {
+  if (username in people && password === people[username].password) {
+    done(null, jwt.encode({ username }, SECRET));
+    return;
+  }
+  done(null, false);
+}));
+
+passport.use(new BearerStrategy((token, done) => {
+  try {
+    const { username } = jwt.decode(token, SECRET);
+    if (username in loginDetails) {
+      done(null, username);
+      return;
+    }
+    done(null, false);
+  } catch (error) {
+    done(null, false);
+  }
+}));
+
+app.post('/login', passport.authenticate('local', { session: false }),
+  (req, res) => {
+    console.log(req.body);
+    res.send({
+      token: req.user,
+    });
+  },
+);
+
+app.get('/logout', function(req, res){
+  req.logout();
+});
 
 app.post('/event', function(req,resp){
   var room = req.body.room; 
@@ -70,22 +108,6 @@ app.post('/people', function(req, resp){
     } else {
       resp.statusCode = 400;
     }
-  }
-  resp.send(result);
-});
-
-app.post('/logOn', function(req, resp){
-  var result = {"message":"", "token":""}
-  if (req.body.username in people){
-    if (people[req.body.username].password == req.body.password) {
-      result.message = "success";
-      result.token = randomstring.generate(12);
-      logInTokens[req.body.username] = result.token
-    } else {
-      result.message = "incorrect password";
-    }
-  } else {
-    result.message = "incorrect username"
   }
   resp.send(result);
 });

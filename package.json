@@ -15,7 +15,11 @@
     "fullcalendar-scheduler": "^1.9.4",
     "jest": "^23.6.0",
     "jquery": "^3.3.1",
-    "moment": "^2.23.0",
+    "jwt-simple": "^0.5.5",
+    "moment": "^2.24.0",
+    "passport": "^0.4.0",
+    "passport-http-bearer": "^1.0.1",
+    "passport-local": "^1.0.0",
     "randomstring": "^1.1.5",
     "supertest": "^3.3.0"
   }

@@ -91,6 +91,10 @@ img {
     height: 480px;
 }
 
+#book-btn, #nav-button-log-out {
+    display:none;
+}
+
 #centre {
     margin-left:1%;
     display:block;
@@ -121,7 +125,7 @@ img {
     margin:0;
 }
 
-#nav-button{
+#nav-button, #nav-button-sign-up, #nav-button-log-in, #nav-button-log-out{
     width:100%;
     text-align: left;
 }
