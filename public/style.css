@@ -105,6 +105,11 @@ img {
     width: 15%;
 }
 
+#end-time-error, #start-time-error {
+    color: red;
+    display: none;
+}
+
 #header{
     display:inline;
     font-size: 150%;

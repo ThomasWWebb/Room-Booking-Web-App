@@ -71,11 +71,25 @@ app.get('/logout', function(req, res){
 });
 
 app.post('/event', function(req,resp){
-  var room = req.body.room; 
+  var clash = false;
+  var room = req.body.room;
+  const roomEvents = events[room];
   var event = req.body;
   delete event.room;
-  events[room].push(event);
-  resp.send(events[room]);
+  roomEvents.forEach(function(element){
+    if (element.start.substring(0,10) == event.start.substring(0,10)){
+      if((event.start <= element.start && event.end > element.start) || (event.start < element.end && event.end >= element.end) || (event.start >= element.start && event.end <= element.end)) {
+        clash = true;
+      }
+    }
+  }) 
+  if (!clash) {
+    events[room].push(event);
+    resp.send(events[room]);
+  } else {
+    resp.send("clash");
+  }
+  
 });
 
 app.get('/people', function(req, resp){
