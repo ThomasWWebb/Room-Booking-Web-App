@@ -17,7 +17,7 @@
                 var event = new Object();
         
                 function getPeople(){ 
-                    $.get("http://127.0.0.1:8090/people",
+                    $.get("/people",
                         function (data){
                             console.log(data);
                         }, "json");
@@ -25,7 +25,7 @@
                 };
         
                 function getPerson(username){ 
-                    $.get("http://127.0.0.1:8090/people/:username",
+                    $.get("/people/:username",
                         function (data){
                             console.log(data);
                         }, "json");
@@ -33,7 +33,7 @@
                 };
         
                 function logIn(details){ 
-                $.post("http://127.0.0.1:8090/login", details,
+                $.post("/login", details,
                     function (data){
                         console.log(data);
                         if (data.token) {
@@ -44,7 +44,7 @@
                 };
 
                 function logOut(){ 
-                    $.get("http://127.0.0.1:8090/logout",
+                    $.get("/logout",
                         function (data){
                             console.log(data);
 
@@ -56,7 +56,7 @@
                 function postNewPerson(newPerson){
                     newPerson.access_token = "concertina"
                     console.log(newPerson);
-                    $.post("http://127.0.0.1:8090/people", newPerson,
+                    $.post("/people", newPerson,
                         function (data){
                             console.log(data);
                         }); 
@@ -65,7 +65,7 @@
                 function addEvent(event){
                     console.log(event);
                     var success = true;
-                    $.post("http://127.0.0.1:8090/event", event,
+                    $.post("/event", event,
                         function (data){
                             if (data == "clash"){
                                 timeError();
@@ -118,7 +118,7 @@
                                     dow: [ 0, 1, 2, 3, 4, 5, 6]
                             },
                         events: {
-                            url: "http://127.0.0.1:8090/events/dowrick",
+                            url: "/events/dowrick",
                         },
                         eventBackgroundColor: "rgb(7, 33, 95)",
                         eventTextColor: "white",
@@ -165,8 +165,8 @@
                         room = room.toLowerCase();
                         console.log(prevRoom)
                         console.log(room)
-                        var removeSource = 'http://127.0.0.1:8090/events/' + prevRoom;
-                        var newSource = 'http://127.0.0.1:8090/events/' + room;
+                        var removeSource = '/events/' + prevRoom;
+                        var newSource = '/events/' + room;
                         $('#calendar').fullCalendar( 'removeEventSource', removeSource )
                         $("#calendar").fullCalendar('addEventSource', newSource);
                         closeRooms();
