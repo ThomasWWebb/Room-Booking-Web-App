@@ -1,8 +1,167 @@
-#full {
-    width: 100%;
-    text-align: center
-}
-#test {
+img {
     margin:auto;
     display:block;
 }
+
+.btn-primary {
+    background-color:#384E80;
+    border-color: #384E80;
+}
+
+.carousel-caption { 
+    color:white;
+    font-size: 100%;
+    background-color:rgba(0,0,0, 0.7);
+    
+}
+
+.carousel-caption:hover { 
+    color:white;
+    font-size: 100%;
+    background-color:rgba(0, 0, 0, 0.9);
+    
+}
+
+.fc-scroller {
+    overflow-y: auto;
+ }
+
+.fc-title, .fc-time {
+    text-align: center;
+}
+
+.fc-view {
+    margin-top:1%;
+    position: absolute;
+    bottom:0;
+    overflow-y: auto;
+    overflow-y: hidden;
+    }
+
+.navbar{
+    background-color: #384E80;
+    color: white;
+    padding-bottom: 0.5%;
+    width:100%;
+}
+
+.nav-item{
+    width:100%;
+}
+
+.overlay {    
+    height: 100%;
+    width: 0%;
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    color: white;
+    background-color: rgba(0,0,0, 0.8);
+    overflow-x: hidden; 
+    transition: 0.5s;
+  }
+
+.overlay-content {
+    position: relative;
+    top: 20%; 
+    width: 100%;
+    text-align: center;
+}
+
+#calendar {
+    background-color: white;
+    height:10%;
+    width:80%;
+    float: none;
+    margin: auto;
+    margin-top:1%;
+    margin-bottom:1%;
+}
+
+.carousel-inner{
+    height: 480px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.carousel slide container {
+    text-align: center;
+    height: 480px;
+}
+
+#book-btn, #nav-button-log-out {
+    display:none;
+}
+
+#centre {
+    margin-left:1%;
+    display:block;
+}
+
+#Dowrick-btn, #Mash-btn, #Gym-btn {
+    display:inline-block;
+    width: 15%;
+}
+
+#end-time-error, #start-time-error {
+    color: red;
+    display: none;
+}
+
+#header{
+    display:inline;
+    font-size: 150%;
+}
+
+#log-in-close-btn, #rooms-close-btn, #sign-up-close-btn{
+    color: white;
+    margin:1%;
+}
+
+#log-in-form, #new-booking-form, #sign-up-form-first, #sign-up-form-second {
+    margin:auto;
+    display:block;
+}
+
+#log-in-form-row, #new-booking-form-row, #sign-up-form-row {
+    text-align: center;
+    margin:0;
+}
+
+#nav-button, #nav-button-sign-up, #nav-button-log-in, #nav-button-log-out{
+    width:100%;
+    text-align: left;
+}
+
+#new-booking-overlay {
+    top:10%;
+}
+
+#rooms-btns {
+    margin-top:1%;
+    height:50px;
+    text-align: center;
+    margin-right:30%;
+}
+
+#rooms-carousel {
+    margin-top:3%;
+}
+
+#rooms-overlay {
+    top:1%;
+}
+
+#sign-up-form-second {
+    display:none;
+}
+
+
+
+
+
+
+
+
