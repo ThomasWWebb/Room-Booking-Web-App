@@ -15,7 +15,7 @@ function getPeople(){
 function checkUsername(username){
     $.post("/checkusername", {"username" : username},
         function (data){
-            if (data == "taken") {
+            if (data.result == "taken") {
                 document.getElementById('sign-up-username').style.borderColor = "red";
                 document.getElementById('sign-up-username-error').style.display = "inline";
             } else {
@@ -138,8 +138,14 @@ $(document).ready(function() {
             document.getElementById('sign-up-re-enter-password').style.borderColor = "red";
             document.getElementById('sign-up-re-enter-password-error').style.display = "inline";
             document.getElementById('sign-up-password-error').style.display = "inline"
+        } else {
+            document.getElementById('sign-up-password').style.borderColor = "transparent";
+            document.getElementById('sign-up-re-enter-password').style.borderColor = "transparent";
+            document.getElementById('sign-up-re-enter-password-error').style.display = "none";
+            document.getElementById('sign-up-password-error').style.display = "none"
+            checkUsername(person.username);
         }
-        checkUsername(person.username);
+        
         return false;
     });
     

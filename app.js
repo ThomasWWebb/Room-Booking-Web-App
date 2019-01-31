@@ -15,22 +15,34 @@ var loginDetails = {"admin" : "password", "doctorwhocomposer" : "12345678"};
 var people = {"doctorwhocomposer" : {"username":"doctorwhocomposer", "forename":"Delia", "surname":"Derbyshire", "password":"12345678", "email": "doctor@who.com"}}
 
 var dowrickEvents = [{
-  title: 'Event Title1',
-  start: '2019-01-21T13:13:55.008',
-  end: '2019-01-21T14:14:55.008'
+  title: 'Dowrick Event 1',
+  start: '2019-01-31T13:00:00',
+  end: '2019-01-31T14:14:00'
   },
   {
-  title: 'Event Title2',
-  start: '2019-01-21T15:13:55',
-  end: '2019-01-21T16:13:55'
+  title: 'Dowrick Event 2',
+  start: '2019-01-31T15:15:00',
+  end: '2019-01-31T16:30:00'
   }];
 
 var mashEvents = [{
-  title: 'Band',
-  start: '2019-01-21T13:13:55.008',
-  end: '2019-01-21T14:14:55.008'
+  title: 'Mash Event 1',
+  start: '2019-02-01T08:45:00',
+  end: '2019-02-01T12:00:00'
 }];
-var events = {"dowrick" : dowrickEvents, "mash" : mashEvents}
+
+var gymEvents = [{
+  title: 'Gym Event 2',
+  start: '2019-02-02T08:45:00',
+  end: '2019-02-02T18:00:00'
+},
+{
+  title: 'Gym Event 1',
+  start: '2019-01-30T08:45:00',
+  end: '2019-01-30T18:00:00'
+}
+];
+var events = {"dowrick" : dowrickEvents, "mash" : mashEvents, "gym" : gymEvents}
 
 app.get('/events/:room', function(req, resp){
     resp.send(events[req.params.room]);
@@ -105,11 +117,11 @@ app.get('/people/:username', function(req, resp){
 })
 
 app.post('/checkusername', function(req, resp){
-  var result = "free"
+  var response = {"result" : "free"}
   if (req.body.username in people) {
-    result = "taken";
+    response.result = "taken";
   }
-  resp.send(result);
+  resp.send(response);
 })
 
 app.post('/people', function(req, resp){
