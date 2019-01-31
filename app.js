@@ -59,7 +59,6 @@ passport.use(new BearerStrategy((token, done) => {
 
 app.post('/login', passport.authenticate('local', { session: false }),
   (req, res) => {
-    console.log(req.body);
     res.send({
       token: req.user,
     });
@@ -72,24 +71,29 @@ app.get('/logout', function(req, res){
 
 app.post('/event', function(req,resp){
   var clash = false;
+  var response = {};
   var room = req.body.room;
   const roomEvents = events[room];
   var event = req.body;
   delete event.room;
-  roomEvents.forEach(function(element){
-    if (element.start.substring(0,10) == event.start.substring(0,10)){
-      if((event.start <= element.start && event.end > element.start) || (event.start < element.end && event.end >= element.end) || (event.start >= element.start && event.end <= element.end)) {
-        clash = true;
+  if(req.body.access_token == 'concertina'){
+    roomEvents.forEach(function(element){
+      if (element.start.substring(0,10) == event.start.substring(0,10)){
+        if((event.start <= element.start && event.end > element.start) || (event.start < element.end && event.end >= element.end) || (event.start >= element.start && event.end <= element.end)) {
+          clash = true;
+        }
       }
+    }) 
+    if (!clash) {
+      events[room].push(event);
+      response = { "result" : events[room]};
+    } else {
+      response = {"result" : "clash"};
     }
-  }) 
-  if (!clash) {
-    events[room].push(event);
-    resp.send(events[room]);
   } else {
-    resp.send("clash");
+    resp.statusCode = 403;
   }
-  
+  resp.send(response);
 });
 
 app.get('/people', function(req, resp){
@@ -98,6 +102,14 @@ app.get('/people', function(req, resp){
 
 app.get('/people/:username', function(req, resp){
   resp.send(people[req.params.username]);
+})
+
+app.post('/checkusername', function(req, resp){
+  var result = "free"
+  if (req.body.username in people) {
+    result = "taken";
+  }
+  resp.send(result);
 })
 
 app.post('/people', function(req, resp){

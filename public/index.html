@@ -1,456 +1,181 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src='https://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
         <script src='https://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>
         <script src="https://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
         <script src='https://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+        <script src="scripts.js"></script>
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="fullcalendar.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     </head>
-    <body>
-        <script>
-                var person = new Object();
-                var event = new Object();
-        
-                function getPeople(){ 
-                    $.get("/people",
-                        function (data){
-                            console.log(data);
-                        }, "json");
-                    return false;      
-                };
-        
-                function getPerson(username){ 
-                    $.get("/people/:username",
-                        function (data){
-                            console.log(data);
-                        }, "json");
-                    return false;      
-                };
-        
-                function logIn(details){ 
-                $.post("/login", details,
-                    function (data){
-                        console.log(data);
-                        if (data.token) {
-                            loggedIn();
-                        }
-                    }, "json");
-                return false;      
-                };
-
-                function logOut(){ 
-                    $.get("/logout",
-                        function (data){
-                            console.log(data);
-
-                        }, "json");
-                    return false;      
-                };
-        
-        
-                function postNewPerson(newPerson){
-                    newPerson.access_token = "concertina"
-                    console.log(newPerson);
-                    $.post("/people", newPerson,
-                        function (data){
-                            console.log(data);
-                        }); 
-                };
-
-                function addEvent(event){
-                    console.log(event);
-                    var success = true;
-                    $.post("/event", event,
-                        function (data){
-                            if (data == "clash"){
-                                timeError();
-                                success = false;
-                                return false;
-                            } else {
-                                document.getElementById('start-time').style.borderColor = "transparent";
-                                document.getElementById('end-time').style.borderColor = "transparent";
-                                document.getElementById('start-time-error').style.display = "none";
-                                document.getElementById('end-time-error').style.display = "none";
-                                success = true;
-                                return true;
-                            }
-                        }); 
-                    return success;
-                };
-
-                function timeError() {
-                    document.getElementById('start-time').style.borderColor = "red";
-                    document.getElementById('end-time').style.borderColor = "red";
-                    document.getElementById('start-time-error').style.display = "inline";
-                    document.getElementById('end-time-error').style.display = "inline"
-                }
-        
-                $(document).ready(function() {
-                    $('#calendar').fullCalendar({
-                        columnFormat: 'ddd D/M',
-                        defaultView: 'agendaWeek',
-                        height: 440,
-                        contentHeight:420,
-                        header: {
-                            left: 'title',
-                            center: 'myCustomButton',
-                            right: 'prev,next today '
-                        },
-                        customButtons: {
-                            myCustomButton: {
-                                text: 'custom!', 
-                                click: function() {
-                                    alert('clicked the custom button!');
-                                }
-                            }
-                        },
-                        titleFormat: '[Dowrick]',
-                        allDaySlot: false,
-                        businessHours:
-                            {
-                                    start: '08:00',
-                                    end:   '22:30',
-                                    dow: [ 0, 1, 2, 3, 4, 5, 6]
-                            },
-                        events: {
-                            url: "/events/dowrick",
-                        },
-                        eventBackgroundColor: "rgb(7, 33, 95)",
-                        eventTextColor: "white",
-                        eventBorderColor:"rgb(7, 33, 95)"
-                    })
-                    var bookBtn = $('#book-btn')
-                    $('.fc-right').append(bookBtn);
-
-                    $(document).on('click', '#log-in-btn', function() {
-                        var details = new Object();
-                        details.username =  document.getElementById('log-in-username').value;
-                        details.password = document.getElementById('log-in-password').value;
-                        console.log(details);
-                        logIn(details);
-                        return false;
-                    });
-
-                    $(document).on('submit', '#sign-up-form-first', function() {
-                        person.username = document.getElementById('sign-up-username').value;
-                        person.password = document.getElementById('sign-up-password').value;
-                        console.log(person);
-                        $("#sign-up-form-first").fadeOut("slow",  function () {
-                            $("#sign-up-form-second").fadeIn("slow");
-                        });     
-                        return false;
-                    });
-                    
-                    $(document).on('submit', '#sign-up-form-second', function() {
-                        person.email= document.getElementById('sign-up-email').value;
-                        person.forename = document.getElementById('sign-up-forename').value;
-                        person.surname = document.getElementById('sign-up-surname').value;
-                        console.log(person);
-                        $("#sign-up-form-second").fadeOut("slow",  function () {
-                            closeSignUp();
-                        });
-                        postNewPerson(person);
-                        return false;
-                    });
-
-                    function changeRooms(room) {
-                        var prevRoom = $('.fc-left h2').text();
-                        $(".fc-left h2").html(room);
-                        prevRoom = prevRoom.toLowerCase();
-                        room = room.toLowerCase();
-                        console.log(prevRoom)
-                        console.log(room)
-                        var removeSource = '/events/' + prevRoom;
-                        var newSource = '/events/' + room;
-                        $('#calendar').fullCalendar( 'removeEventSource', removeSource )
-                        $("#calendar").fullCalendar('addEventSource', newSource);
-                        closeRooms();
-                    }
-
-                    $(document).on('click', '#Dowrick-btn', function() {
-                        changeRooms("Dowrick");
-                    })
-
-                    $(document).on('click', '#Mash-btn', function() {
-                        changeRooms("Mash");
-                    })
-
-                    $(document).on('click', '#Gym-btn', function() {
-                        changeRooms("Gym");
-                    })
-
-                    $('.carousel').carousel({
-                        interval: false
-                    }); 
-
-                    $(document).on('mouseenter', '#Dowrick-btn', function() {
-                        $('#rooms-carousel').carousel(0);
-                    });
-
-                    $(document).on('mouseenter', '#Mash-btn', function() {
-                        $('#rooms-carousel').carousel(1);
-                    });
-
-                    $(document).on('mouseenter', '#Gym-btn', function() {
-                        $('#rooms-carousel').carousel(2);
-                    });
-
-                    $(document).on('submit', '#new-booking-form', function() {
-                        event.title = document.getElementById('display-name').value;
-                        var chosenDate = moment(document.getElementById('date').value, "DD/MM/YYYY");
-                        event.start = document.getElementById('date').value + "T" + document.getElementById('start-time').value;
-                        event.end = document.getElementById('date').value + "T" + document.getElementById('end-time').value;
-                        event.room = $('.fc-left h2').text();
-                        event.room = event.room.toLowerCase();
-                        console.log(moment());
-                        console.log( moment() <= event.start)
-                        if (document.getElementById('start-time').value < document.getElementById('end-time').value && moment() <= event.start) {
-                            var result = addEvent(event);
-                            console.log(result);
-                            if (result){
-                                closeNewBooking();
-                            }
-                            $('#calendar').fullCalendar( 'refetchEvents' );
-                        } else {
-                            timeError();
-                        }
-                        
-                        return false;
-                    });
-                });
-        
-                $(document).ready(function() {
-                    $(document).on('submit', '#sign-up-form-first', function() {
-                        var person = {forename:document.getElementById('sign-up-forename').value, surname:document.getElementById('sign-up-surname').value, username:document.getElementById('sign-up-username').value, email:document.getElementById('sign-up-email').value};
-                        $("#sign-up-form-first").fadeOut("slow",  function () {
-                            $("#sign-up-form-second").fadeIn("slow");
-                        });
-                        return false;
-                    });
-                });
-
-                function loggedIn(){
-                    closeLogIn();
-                    document.getElementById('nav-button-log-in').style.display = "none";
-                    document.getElementById('nav-button-sign-up').style.display = "none";
-                    document.getElementById('nav-button-log-out').style.display = "block";
-                    document.getElementById('book-btn').style.display = "block";
-                }
-
-                function loggedOut(){
-                    logOut()
-                    document.getElementById('nav-button-log-in').style.display = "block";
-                    document.getElementById('nav-button-sign-up').style.display = "block";
-                    document.getElementById('nav-button-log-out').style.display = "none";
-                    document.getElementById('book-btn').style.display = "none";
-                }
-
-                function openSignUp() {
-                    document.getElementById("sign-up-form-second").style.display = "none";
-                    document.getElementById("sign-up-form-first").style.display = "block";
-                    document.getElementById("sign-up").style.width = "100%";
-                }
-        
-                function closeSignUp() {
-                    document.getElementById("sign-up").style.width = "0%";
-                }
-        
-                function openLogIn() {
-                    document.getElementById("log-in").style.width = "100%";
-                }
-        
-                function closeLogIn() {
-                    document.getElementById("log-in").style.width = "0%";
-                }
-
-                function openRooms() {
-                    document.getElementById("rooms").style.width = "100%";
-                }
-        
-                function closeRooms() {
-                    document.getElementById("rooms").style.width = "0%";
-                }
-
-                 function openNewBooking() {
-                    document.getElementById("new-booking").style.width = "100%";
-                    document.getElementById("book-btn").disabled = true;
-                }
-        
-                function closeNewBooking() {
-                    document.getElementById("new-booking").style.width = "0%";
-                    document.getElementById("book-btn").disabled = false;
-                }
-
-
-        
-            </script>
-            
-           <div id="total-container" class="container-fluid">
-                <div class="row">
-                    <nav class="navbar navbar-dark">
-                        <h2 id ="header" class="navbar-brand" >Trevelyan College Booking System</h2>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content"
-                        aria-controls="nav-content" aria-expanded="false"><span class="navbar-toggler-icon"></span></button>
-                        <div class="collapse navbar-collapse" id="nav-content"> 
-                            <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <button id="nav-button-log-in" class="btn btn-primary" onclick="openLogIn()">Log In</button>
-                                </li>
-                                <li class="nav-item">
-                                    <button id="nav-button-sign-up" class="btn btn-primary" onclick="openSignUp()">Sign Up</button>
-                                </li>
-                                <li class="nav-item">
-                                    <button id="nav-button" class="btn btn-primary" onclick="openRooms()">Rooms</button>
-                                </li>
-                                <li class="nav-item">
-                                    <button id="nav-button" class="btn btn-primary" onclick="getPeople()">People</button>
-                                </li>
-                                <li class="nav-item">
-                                    <button id="nav-button-log-out" class="btn btn-primary" onclick="loggedOut()">Log Out</button>
-                                </li>
-                            </ul>
-                        </div> 
-                    </nav>
-                </div>
-                <div class="row">
-                        <div id='calendar'></div>
-                        <div><button id="book-btn" class="btn btn-primary" onclick="openNewBooking()">New Booking</button></div>
-                    </div>
+    <body>   
+        <div id="total-container" class="container-fluid">
+            <div class="row">
+                <nav class="navbar navbar-dark">
+                    <h2 id ="header" class="navbar-brand" >Trevelyan College Booking System</h2>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content"
+                    aria-controls="nav-content" aria-expanded="false"><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="nav-content"> 
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <button id="nav-button-log-in" class="btn btn-primary" onclick="openLogIn()">Log In</button>
+                            </li>
+                            <li class="nav-item">
+                                <button id="nav-button-sign-up" class="btn btn-primary" onclick="openSignUp()">Sign Up</button>
+                            </li>
+                            <li class="nav-item">
+                                <button id="nav-button" class="btn btn-primary" onclick="openRooms()">Rooms</button>
+                            </li>
+                            <li class="nav-item">
+                                <button id="nav-button-log-out" class="btn btn-primary" onclick="loggedOut()">Log Out</button>
+                            </li>
+                        </ul>
+                    </div> 
+                </nav>
             </div>
-        
-            <div id="sign-up" class="overlay">
-                <button type="button" id="sign-up-close-btn" class="close" aria-label="Close"  onclick="closeSignUp()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <div class="overlay-content">
-                    <div class="row" id="sign-up-form-row">
-                        <form id="sign-up-form-first">
-                            <div class="form-group">
-                                <label>Username</label>
-                                <input type="text" class="form-control" id="sign-up-username" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" class="form-control" id="sign-up-password" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Next</button>
-                        </form>
-                        <form id="sign-up-form-second">
-                            <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="email" class="form-control" id="sign-up-email" required>
-                                </div>
-                            <div class="form-group">
-                                <label>First Name</label>
-                                <input type="text" class="form-control" id="sign-up-forename" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Last Name</label>
-                                <input type="text" class="form-control" id="sign-up-surname" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Sign Up</button>
-                        </form>
-                    </div>
+            <div class="row">
+                    <div id='calendar'></div>
+                    <div><button id="book-btn" class="btn btn-primary" onclick="openNewBooking()">New Booking</button></div>
+                    <div><h3 id="calendar-title">Dowrick</h3></div>
                 </div>
-            </div> 
-        
-            <div id="log-in" class="overlay">
-                <button type="button" id="log-in-close-btn" class="close" aria-label="Close"  onclick="closeLogIn()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <div class="overlay-content">
-                    <div class="row" id="log-in-form-row">
-                        <form id="log-in-form">
-                            <div class="form-group">
-                                <label>Username</label>
-                                <input type="text" class="form-control" id="log-in-username" required>
+        </div>
+    
+        <div id="sign-up" class="overlay">
+            <button type="button" id="sign-up-close-btn" class="close" aria-label="Close"  onclick="closeSignUp()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="overlay-content">
+                <div class="row" id="sign-up-form-row">
+                    <form id="sign-up-form-first">
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" class="form-control" id="sign-up-username" required>
+                            <div id="sign-up-username-error">This username is not available</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" id="sign-up-password" required>
+                            <div id="sign-up-password-error">These passwords are not the same</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Re-enter Password</label>
+                            <input type="password" class="form-control" id="sign-up-re-enter-password" required>
+                            <div id="sign-up-re-enter-password-error">These passwords are not the same</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Next</button>
+                    </form>
+                    <form id="sign-up-form-second">
+                        <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" class="form-control" id="sign-up-email" required>
                             </div>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" class="form-control" id="log-in-password" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary" id="log-in-btn">Log In</button>
-                        </form>
-                    </div>
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" class="form-control" id="sign-up-forename" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" class="form-control" id="sign-up-surname" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                    </form>
                 </div>
-            </div> 
+            </div>
+        </div> 
+    
+        <div id="log-in" class="overlay">
+            <button type="button" id="log-in-close-btn" class="close" aria-label="Close"  onclick="closeLogIn()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="overlay-content">
+                <div class="row" id="log-in-form-row">
+                    <form id="log-in-form">
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" class="form-control" id="log-in-username" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" id="log-in-password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="log-in-btn">Log In</button>
+                    </form>
+                </div>
+            </div>
+        </div> 
 
-            <div id="rooms" class="overlay">
-                <button type="button" id="rooms-close-btn" class="close" aria-label="Close"  onclick="closeRooms()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <div class="overlay-content" id="rooms-overlay">
-                            <div id="rooms-carousel" class="carousel slide container">
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                        <img class="d-block w-100" src="Images/Dowrick.png" alt="Dowrick">
-                                        <div class="carousel-caption" type="button" onclick="closeRooms()">
-                                            <h5>Dowrick</h5>
-                                            <p>60-Seat Recital Room</p>
-                                        </div>
-                                        </div>
-                                        <div class="carousel-item">
-                                        <img class="d-block w-100" src="Images/Mash.png" alt="Mash">
-                                        <div class="carousel-caption" type="button" onclick="closeRooms()">
-                                            <h5>MASH Room</h5>
-                                            <p>Sound-proof practice space and recording studio</p>
-                                        </div>
-                                        </div>
-                                        <div class="carousel-item">
-                                        <img class="d-block w-100" src="Images/Gym.png" alt="Gym">
-                                        <div class="carousel-caption" type="button" onclick="closeRooms()">
-                                            <h5>Gym</h5>
-                                            <p>A Gym</p>
-                                            </div>
+        <div id="rooms" class="overlay">
+            <button type="button" id="rooms-close-btn" class="close" aria-label="Close"  onclick="closeRooms()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="overlay-content" id="rooms-overlay">
+                        <div id="rooms-carousel" class="carousel slide container">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                    <img class="d-block w-100" src="Images/Dowrick.png" alt="Dowrick">
+                                    <div class="carousel-caption" type="button" onclick="closeRooms()">
+                                        <h5>Dowrick</h5>
+                                        <p>60-Seat Recital Room</p>
+                                    </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                    <img class="d-block w-100" src="Images/Mash.png" alt="Mash">
+                                    <div class="carousel-caption" type="button" onclick="closeRooms()">
+                                        <h5>MASH Room</h5>
+                                        <p>Sound-proof practice space and recording studio</p>
+                                    </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                    <img class="d-block w-100" src="Images/Gym.png" alt="Gym">
+                                    <div class="carousel-caption" type="button" onclick="closeRooms()">
+                                        <h5>Gym</h5>
+                                        <p>A Gym</p>
                                         </div>
                                     </div>
                                 </div>
-                                <button id="Dowrick-btn" class="btn btn-primary" data-toggle="collapse" data-target="#nav-content">Dowrick</button>
-                                <button id="Mash-btn" class="btn btn-primary" data-toggle="collapse" data-target="#nav-content">MASH</button>
-                                <button id="Gym-btn" class="btn btn-primary" data-toggle="collapse" data-target="#nav-content">Gym</button>
-                </div>
+                            </div>
+                            <button id="Dowrick-btn" class="btn btn-primary" data-toggle="collapse" data-target="#nav-content">Dowrick</button>
+                            <button id="Mash-btn" class="btn btn-primary" data-toggle="collapse" data-target="#nav-content">MASH</button>
+                            <button id="Gym-btn" class="btn btn-primary" data-toggle="collapse" data-target="#nav-content">Gym</button>
             </div>
+        </div>
 
-            <div id="new-booking" class="overlay">
-                    <button type="button" id="log-in-close-btn" class="close" aria-label="Close"  onclick="closeNewBooking()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <div class="overlay-content" id="new-booking-overlay">
-                        <div class="row" id="new-booking-form-row">
-                            <form id="new-booking-form">
-                                <div class="form-group">
-                                    <label>Name</label>
-                                    <input type="name" class="form-control" id="display-name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Date</label>
-                                    <input type="date" class="form-control" id="date" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Start time</label>
-                                    <input type="time" class="form-control" id="start-time" required>
-                                    <div id="start-time-error">This time slot is not availible</div>
-                                </div>
-                                <div class="form-group">
-                                    <label>End time</label>
-                                    <input type="time" class="form-control" id="end-time" required> 
-                                    <div id="end-time-error">This time slot is not availible</div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Description</label>
-                                    <input type="text" class="form-control" id="description">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Book</button>
-                            </form>
-                        </div>
+        <div id="new-booking" class="overlay">
+                <button type="button" id="log-in-close-btn" class="close" aria-label="Close"  onclick="closeNewBooking()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="overlay-content" id="new-booking-overlay">
+                    <div class="row" id="new-booking-form-row">
+                        <form id="new-booking-form">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="name" class="form-control" id="display-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="date" class="form-control" id="date" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Start time</label>
+                                <input type="time" class="form-control" id="start-time" required>
+                                <div id="start-time-error">This time slot is not available</div>
+                            </div>
+                            <div class="form-group">
+                                <label>End time</label>
+                                <input type="time" class="form-control" id="end-time" required> 
+                                <div id="end-time-error">This time slot is not available</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <input type="text" class="form-control" id="description">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Book</button>
+                        </form>
                     </div>
-                </div> 
+                </div>
+            </div> 
     </body>
-
-    
-
 </html>

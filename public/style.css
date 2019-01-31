@@ -3,7 +3,7 @@ img {
     display:block;
 }
 
-.btn-primary {
+.btn-primary, .btn.btn-primary {
     background-color:#384E80;
     border-color: #384E80;
 }
@@ -95,6 +95,11 @@ img {
     display:none;
 }
 
+#calendar-title {
+    font-size: 200%;
+    margin:0%;
+}
+
 #centre {
     margin-left:1%;
     display:block;
@@ -103,9 +108,10 @@ img {
 #Dowrick-btn, #Mash-btn, #Gym-btn {
     display:inline-block;
     width: 15%;
+    margin-top:1%;
 }
 
-#end-time-error, #start-time-error {
+#end-time-error, #start-time-error, #sign-up-username-error, #sign-up-re-enter-password-error, #sign-up-password-error {
     color: red;
     display: none;
 }
