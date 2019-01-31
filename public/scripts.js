@@ -87,6 +87,8 @@ function timeError() {
 }
 
 $(document).ready(function() {
+    //JS open source calendar used to display JSON events from https://fullcalendar.io/
+    //All $('#calendar').fullCalendar.. functions are from this calendar
     $('#calendar').fullCalendar({
         columnFormat: 'ddd D/M',
         defaultView: 'agendaWeek',
