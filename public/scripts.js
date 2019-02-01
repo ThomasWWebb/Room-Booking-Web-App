@@ -47,14 +47,6 @@ $.post("/login", details,
 return false;      
 };
 
-function logOut(){ 
-    $.get("/logout",
-        function (data){
-        }, "json");
-    return false;      
-};
-
-
 function postNewPerson(newPerson){
     newPerson.access_token = access_token;
     $.post("/people", newPerson,
@@ -224,7 +216,6 @@ function loggedIn(){
 }
 
 function loggedOut(){
-    logOut()
     document.getElementById('nav-button-log-in').style.display = "block";
     document.getElementById('nav-button-sign-up').style.display = "block";
     document.getElementById('nav-button-log-out').style.display = "none";

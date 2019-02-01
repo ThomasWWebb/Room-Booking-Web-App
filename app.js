@@ -76,10 +76,6 @@ app.post('/login', passport.authenticate('local', { session: false }),
   },
 );
 
-app.get('/logout', function(req, res){
-  req.logout();
-});
-
 app.post('/event', function(req,resp){
   var clash = false;
   var response = {};
