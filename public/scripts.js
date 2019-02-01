@@ -144,8 +144,7 @@ $(document).ready(function() {
             document.getElementById('sign-up-re-enter-password-error').style.display = "none";
             document.getElementById('sign-up-password-error').style.display = "none"
             checkUsername(person.username);
-        }
-        
+        } 
         return false;
     });
     
