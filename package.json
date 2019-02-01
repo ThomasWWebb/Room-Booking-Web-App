@@ -21,7 +21,6 @@
     "passport": "^0.4.0",
     "passport-http-bearer": "^1.0.1",
     "passport-local": "^1.0.0",
-    "randomstring": "^1.1.5",
     "supertest": "^3.3.0"
   }
 }

@@ -101,7 +101,7 @@ $(document).ready(function() {
             center: 'myCustomButton',
             right: 'prev,next today '
         },
-        titleFormat: '',
+        titleFormat: '[]',
         allDaySlot: false,
         businessHours:
             {
