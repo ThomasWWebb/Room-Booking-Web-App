@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "fullcalendar": "^3.10.0",
     "fullcalendar-scheduler": "^1.9.4",

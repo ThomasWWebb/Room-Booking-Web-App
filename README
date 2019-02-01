@@ -22,3 +22,7 @@ won't let you post it to the server until it's a valid event. Which it then post
 it into the array and it will be displayed when it is re-rendered. Just to show that it persists when moving
 between different room schedules and that this can be done at any point as well as when you've signed up you
 can log out and to show you can sign back in again after you've signed out
+
+Login:
+
+doctorwhocomposer has the password 12345678
