@@ -66,7 +66,6 @@ function addEvent(event){
     event.access_token = access_token;
     $.post("/event", event,
         function (data){
-            console.log(data);
             if (data.result == "clash"){
                 timeError();
             } else {
