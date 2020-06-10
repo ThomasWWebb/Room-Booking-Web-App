@@ -10,8 +10,8 @@ const jwt = require('jwt-simple');
 const BearerStrategy = require('passport-http-bearer').Strategy;
 const SECRET = 'mysecret';
 
-var loginDetails = {"admin" : "password", "doctorwhocomposer" : "12345678"};
-var people = {"doctorwhocomposer" : {"username":"doctorwhocomposer", "forename":"Delia", "surname":"Derbyshire", "password":"12345678", "email": "doctor@who.com"}}
+var loginDetails = {"admin" : "password", "testuser" : "password"};
+var people = {"testuser" : {"username":"testuser", "forename":"Delia", "surname":"Derbyshire", "password":"password", "email": "test@user.com"}}
 
 var dowrickEvents = [{
   title: 'Dowrick Event 1',
@@ -84,13 +84,18 @@ app.post('/event', function(req,resp){
   var event = req.body;
   delete event.room;
   if(req.body.access_token == 'concertina'){
-    roomEvents.forEach(function(element){
-      if (element.start.substring(0,10) == event.start.substring(0,10)){
-        if((event.start <= element.start && event.end > element.start) || (event.start < element.end && event.end >= element.end) || (event.start >= element.start && event.end <= element.end)) {
-          clash = true;
+    if (event.start >= event.end){
+      clash = true;
+    } else {
+      roomEvents.forEach(function(element){
+        if (element.start.substring(0,10) == event.start.substring(0,10)){
+          if((event.start <= element.start && event.end > element.start) || (event.start < element.end && event.end >= element.end) || (event.start >= element.start && event.end <= element.end)) {
+            clash = true;
+          }
         }
-      }
-    }) 
+      })
+    }
+     
     if (!clash) {
       events[room].push(event);
       response = { "result" : events[room]};
