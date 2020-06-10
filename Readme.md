@@ -12,7 +12,7 @@ The Node.js server can then be run via:
 
     npm start
 
-The sever is located at `localhost:8090`. Three different rooms can be selected to be booked. To book a room first a user must log in via the pre-existing login (username : **testuser** | password : **password**) or create their own through sign-up. THe primary objective of this web app was as a proof of concept as part of a degree web assignment.
+The sever is located at `localhost:8090`. Three different rooms can be selected to be booked. To book a room first a user must log in via the pre-existing login (username : **testuser** | password : **password**) or create their own through sign-up. The primary objective of this web app was as a proof of concept as part of a degree web assignment.
 
 
 
